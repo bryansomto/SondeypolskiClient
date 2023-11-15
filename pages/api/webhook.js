@@ -12,6 +12,7 @@ export default async function handler(req, res) {
   const payload = req.body;
   // It's a good idea to log all received events.
   log(payload);
+  console.log(payload);
   // Do something (that doesn't take too long) with the payload
   res.status(200).end();
 }
