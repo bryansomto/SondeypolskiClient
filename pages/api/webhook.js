@@ -22,6 +22,15 @@ export default async function handler(req, res) {
       },
     })
     .json();
-  console.log(response);
+  if (
+    payload.txRef === response.data.tx_ref &&
+    response.status === "success" &&
+    response.data.currency === "NGN" &&
+    response.data.amount === response.data.charged_amount
+  ) {
+    console.log("PAYMENT CONFIRMED!!!");
+  } else {
+    console.log("PAYMENT FAILED!!!");
+  }
   res.status(200).end();
 }
