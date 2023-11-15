@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   // It's a good idea to log all received events.
   console.log(payload);
   // Do something (that doesn't take too long) with the payload
-  const tx_Id = payload.data.id;
+  const tx_Id = payload.id;
   const response = await got
     .get(`https://api.flutterwave.com/v3/transactions/${tx_Id}/verify`, {
       headers: {
