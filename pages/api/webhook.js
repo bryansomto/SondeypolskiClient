@@ -1,4 +1,5 @@
 import { mongooseConnect } from "@/lib/mongoose";
+import got from "got";
 
 export default async function handler(req, res) {
   await mongooseConnect();
@@ -13,5 +14,14 @@ export default async function handler(req, res) {
   // It's a good idea to log all received events.
   console.log(payload);
   // Do something (that doesn't take too long) with the payload
+  const tx_Id = payload.data.id;
+  const response = await got
+    .get(`https://api.flutterwave.com/v3/transactions/${tx_Id}/verify`, {
+      headers: {
+        Authorization: `Bearer ${process.env.FLW_SECRET_KEY}`,
+      },
+    })
+    .json();
+  console.log(response);
   res.status(200).end();
 }
