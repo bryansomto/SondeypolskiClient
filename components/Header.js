@@ -2,7 +2,7 @@ import Link from "next/link";
 import styled from "styled-components";
 import Center from "./Center";
 import { useContext } from "react";
-import { CartContext } from "../../lib/CartContext";
+import { CartContext } from "@/lib/CartContext";
 
 const StyledHeader = styled.header`
   background-color: #222;

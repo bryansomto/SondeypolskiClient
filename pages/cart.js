@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import Header from "./components/Header";
-import Center from "./components/Center";
-import Button from "./components/Button";
+import Header from "../components/Header";
+import Center from "../components/Center";
+import Button from "../components/Button";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../lib/CartContext";
 import axios from "axios";
-import Table from "./components/Table";
-import Input from "./components/Input";
+import Table from "../components/Table";
+import Input from "../components/Input";
 const ColumnsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;

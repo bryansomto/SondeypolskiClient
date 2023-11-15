@@ -1,8 +1,8 @@
 import { Product } from "@/models/Product";
-import Featured from "./components/Featured";
-import Header from "./components/Header";
+import Featured from "@/components/Featured";
+import Header from "@/components/Header";
 import { mongooseConnect } from "@/lib/mongoose";
-import NewProducts from "./components/NewProducts";
+import NewProducts from "@/components/NewProducts";
 
 export default function HomePage({ featuredProduct, newProducts }) {
   return (

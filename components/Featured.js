@@ -4,7 +4,7 @@ import Button from "./Button";
 import ButtonLink from "./ButtonLink";
 import CartIcon from "./icons/CartIcon";
 import { useContext } from "react";
-import { CartContext } from "../../lib/CartContext";
+import { CartContext } from "@/lib/CartContext";
 
 const Bg = styled.div`
   background-color: #222;

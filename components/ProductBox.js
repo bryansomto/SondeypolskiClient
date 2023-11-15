@@ -3,7 +3,7 @@ import Button from "./Button";
 import CartIcon from "./icons/CartIcon";
 import Link from "next/link";
 import { useContext } from "react";
-import { CartContext } from "../../lib/CartContext";
+import { CartContext } from "@/lib/CartContext";
 
 const ProductWrapper = styled.div``;
 const WhiteBox = styled(Link)`
