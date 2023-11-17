@@ -31,6 +31,7 @@ export default async function handler(req, res) {
     const quantity = productsIds.filter((id) => id === productId)?.length || 0;
     if (quantity > 0 && productInfo) {
       line_items.push({
+        productId,
         quantity,
         price_data: {
           currency: "NGN",
@@ -65,7 +66,8 @@ export default async function handler(req, res) {
         payment_options: "card,mobilemoney,banktransfer",
         redirect_url: `${process.env.HOME_URL}/cart`,
         meta: {
-          orderId: [orderDoc],
+          orderId: orderDoc._id.toString(),
+          other: orderDoc.line_items,
         },
         customer: {
           name: name,
