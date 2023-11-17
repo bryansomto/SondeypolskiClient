@@ -29,7 +29,7 @@ export default async function handler(req, res) {
     response.data.currency === "NGN" &&
     response.data.amount >= response.data.charged_amount
   ) {
-    // console.log(response);
+    console.log(response);
     const orderId = response.meta.orderId;
     await Order.findByIdAndUpdate(orderId, {
       paid: true,
