@@ -28,8 +28,10 @@ export default async function handler(req, res) {
     response.data.currency === "NGN" &&
     response.data.amount === response.data.charged_amount
   ) {
+    console.log(response);
     console.log("PAYMENT CONFIRMED!!!");
   } else {
+    console.log(response);
     console.log("PAYMENT FAILED!!!");
   }
   res.status(200).end();
