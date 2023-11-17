@@ -10,7 +10,7 @@ import Input from "../components/Input";
 const ColumnsWrapper = styled.div`
   display: grid;
   gap: 20px;
-  @media (min-width: 640px) {
+  @media (min-width: 768px) {
     grid-template-columns: 1.2fr 0.8fr;
     gap: 40px;
   }
@@ -20,9 +20,9 @@ const ColumnsWrapper = styled.div`
 const Box = styled.div`
   background-color: #fff;
   border-radius: 10px;
-  padding: 10px;
-  @media (min-width: 640px) {
-    padding: 20px;
+  padding: 20px 10px;
+  @media (min-width: 768px) {
+    padding: 40px 20px;
   }
 `;
 
@@ -142,7 +142,7 @@ export default function CartPage() {
       <Center>
         <ColumnsWrapper className="text-sm sm:text-base">
           <Box>
-            <h2>Cart</h2>
+            <h2 className="text-2xl font-bold mb-4">Cart</h2>
             {!cartProducts?.length && <div>Your cart is empty</div>}
             {products?.length > 0 && (
               <Table>

@@ -12,16 +12,38 @@ const Bg = styled.div`
   padding: 50px 0;
 `;
 const Title = styled.h1`
+  margin: 0;
   font-weight: normal;
+  font-size: 1.5rem;
+  @media screen and (min-width: 768px) {
+    font-size: 2.5rem;
+  }
 `;
 const Desc = styled.p`
   color: #aaa;
   font-size: 0.8rem;
 `;
 const ColumnsWrapper = styled.div`
+  display: grid;
   gap: 40px;
+  grid-template-columns: 1fr;
   img {
     max-width: 100%;
+    max-height: 200px;
+    display: block;
+    margin: 0 auto;
+  }
+  div:nth-child(1) {
+    order: 2;
+  }
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 1.1fr 0.9fr;
+    div:nth-child(1) {
+      order: 0;
+    }
+    img {
+      max-width: 100%;
+    }
   }
 `;
 
@@ -44,9 +66,9 @@ export default function Featured({ product }) {
   return (
     <Bg>
       <Center>
-        <ColumnsWrapper className="flex flex-col-reverse md:grid md:grid-flow-col md:auto-cols-[minmax(1,_2fr)]">
+        <ColumnsWrapper>
           <Column>
-            <div className="space-y-3 text-center md:text-left">
+            <div className="space-y-4 text-center md:text-left">
               <Title className="text-2xl sm:text-3xl lg:text-5xl">
                 {product.title}
               </Title>

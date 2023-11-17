@@ -41,8 +41,11 @@ const PriceRow = styled.div`
 `;
 
 const Price = styled.div`
-  /* font-size: 1.5rem; */
-  font-weight: 600;
+  font-size: 0.9rem;
+  font-weight: 500;
+  @media screen and (min-width: 768px) {
+    font-size: 1.3rem;
+  }
 `;
 export default function ProductBox({ _id, title, description, price, images }) {
   const { addProduct } = useContext(CartContext);
@@ -51,7 +54,7 @@ export default function ProductBox({ _id, title, description, price, images }) {
     <ProductWrapper>
       <WhiteBox href={url}>
         <div>
-          <img src={images[0]} alt="" />
+          <img src={images?.[0]} alt="" />
         </div>
       </WhiteBox>
       <ProductInfoBox>
@@ -59,9 +62,9 @@ export default function ProductBox({ _id, title, description, price, images }) {
           {title}
         </Title>
         <PriceRow>
-          <Price className="text-sm sm:text-xl lg:text-2xl">₦{price}</Price>
+          <Price>₦{price}</Price>
           <Button onClick={() => addProduct(_id)} primary="true" outline="true">
-            <CartIcon />
+            <CartIcon className="w-4 h-4 sm:w-6 sm:h-6" />
           </Button>
         </PriceRow>
       </ProductInfoBox>

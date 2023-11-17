@@ -3,9 +3,7 @@ import styled from "styled-components";
 import Center from "./Center";
 import { useContext, useState } from "react";
 import { CartContext } from "@/lib/CartContext";
-import { useRouter } from "next/router";
-import { MdMenu, MdMenuOpen } from "react-icons/md";
-import { NavbarLinks, activeNavLink, inactiveNavLink } from "./Links";
+import BarsIcon from "./icons/Bars";
 
 const StyledHeader = styled.header`
   background-color: #222;
@@ -13,6 +11,8 @@ const StyledHeader = styled.header`
 const Logo = styled(Link)`
   color: #fff;
   text-decoration: none;
+  position: relative;
+  z-index: 3;
 `;
 
 const Wrapper = styled.div`
@@ -21,67 +21,70 @@ const Wrapper = styled.div`
   padding: 20px 0;
 `;
 const StyledNav = styled.nav`
-  display: flex;
+  ${(props) =>
+    props.mobileNavActive
+      ? `
+  display: block;
+  `
+      : `
+  display: none;
+  `}
+  gap: 15px;
+  position: fixed;
+  top: 0px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 70px 20px 20px;
+  background-color: #222;
+  @media screen and (min-width: 768px) {
+    display: flex;
+    position: static;
+    padding: 0;
+  }
 `;
 const NavLink = styled(Link)`
+  display: block;
   color: #aaa;
   text-decoration: none;
+  padding: 10px 0;
+  @media screen and (min-width: 768px) {
+    padding: 0;
+  }
+`;
+const NavButton = styled.button`
+  background-color: transparent;
+  width: 40px;
+  height: 40px;
+  border: 0;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  z-index: 3;
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
 `;
 
 export default function Header() {
   const { cartProducts } = useContext(CartContext);
-  const [open, setOpen] = useState(false);
-  const router = useRouter();
-  const { pathname } = router;
+  const [mobileNavActive, setMobileNavActive] = useState(false);
   return (
     <StyledHeader>
       <Center>
         <Wrapper>
           <Logo href={"/"}>Besac Ecommerce</Logo>
 
-          <StyledNav>
-            <div
-              className="dropdown text-3xl sm:hidden"
-              onClick={() => setOpen(!open)}
-            >
-              {open ? (
-                <MdMenuOpen className="icon text-white" />
-              ) : (
-                <MdMenu className="icon text-white" />
-              )}
-            </div>
-            <div
-              className={open ? "mobileNavbar" : "desktopNavbar sm:space-x-4"}
-            >
-              {NavbarLinks.map((data, index) => {
-                if (index !== 3) {
-                  return (
-                    <NavLink
-                      href={data.path}
-                      key={data.path}
-                      className={
-                        pathname == data.path ? activeNavLink : inactiveNavLink
-                      }
-                    >
-                      {data.text}
-                    </NavLink>
-                  );
-                } else {
-                  return (
-                    <NavLink
-                      href={data.path}
-                      key={data.path}
-                      className={
-                        pathname == data.path ? activeNavLink : inactiveNavLink
-                      }
-                    >
-                      {`${data.text} (${cartProducts.length})`}
-                    </NavLink>
-                  );
-                }
-              })}
-            </div>
+          <StyledNav mobileNavActive={mobileNavActive}>
+            <NavLink href={"/"}>Home</NavLink>
+            <NavLink href={"/products"}>All products</NavLink>
+            <NavLink href={"/categories"}>Categories</NavLink>
+            <NavLink href={"/account"}>Account</NavLink>
+            <NavLink href={"/cart"}>Cart ({cartProducts.length})</NavLink>
           </StyledNav>
+          <NavButton onClick={() => setMobileNavActive((prev) => !prev)}>
+            <BarsIcon />
+          </NavButton>
         </Wrapper>
       </Center>
     </StyledHeader>

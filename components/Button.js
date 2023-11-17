@@ -3,8 +3,8 @@ import styled, { css } from "styled-components";
 
 export const ButtonStyle = css`
   border: 0;
-  padding: 4px 5px 4px 7px;
-  @media (min-width: 640px) {
+  padding: 4px 8px;
+  @media (min-width: 768px) {
     padding: 5px 15px;
   }
   border-radius: 5px;
@@ -82,11 +82,10 @@ export const ButtonStyle = css`
     ${(props) =>
     props.type === "count" &&
     css`
-      margin: 3px;
-      padding: 0 6px;
-      color: #fff;
-      background-color: #222;
-      border: 1px solid rgba(0, 0, 0, 0.1);
+      font-size: 14px;
+      margin: 4px;
+      padding: 0 5px;
+      background-color: #eee;
     `}
 `;
 
