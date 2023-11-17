@@ -1,4 +1,5 @@
 import { mongooseConnect } from "@/lib/mongoose";
+import { Order } from "@/models/Order";
 import got from "got";
 
 export default async function handler(req, res) {
@@ -26,10 +27,13 @@ export default async function handler(req, res) {
     payload.txRef === response.data.tx_ref &&
     response.status === "success" &&
     response.data.currency === "NGN" &&
-    response.data.amount === response.data.charged_amount
+    response.data.amount >= response.data.charged_amount
   ) {
-    console.log(response);
-    console.log("PAYMENT CONFIRMED!!!");
+    // console.log(response);
+    const orderId = response.meta.orderId;
+    await Order.findByIdAndUpdate(orderId, {
+      paid: true,
+    });
   } else {
     console.log(response);
     console.log("PAYMENT FAILED!!!");

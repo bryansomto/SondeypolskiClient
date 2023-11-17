@@ -66,7 +66,7 @@ export default async function handler(req, res) {
         payment_options: "card,mobilemoney,banktransfer",
         redirect_url: `${process.env.HOME_URL}/cart`,
         meta: {
-          orderId: orderDoc,
+          orderId: orderDoc._id.toString(),
         },
         customer: {
           name: name,
