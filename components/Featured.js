@@ -12,17 +12,13 @@ const Bg = styled.div`
   padding: 50px 0;
 `;
 const Title = styled.h1`
-  margin: 0;
   font-weight: normal;
-  font-size: 3rem;
 `;
 const Desc = styled.p`
   color: #aaa;
   font-size: 0.8rem;
 `;
 const ColumnsWrapper = styled.div`
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
   gap: 40px;
   img {
     max-width: 100%;
@@ -48,12 +44,14 @@ export default function Featured({ product }) {
   return (
     <Bg>
       <Center>
-        <ColumnsWrapper>
+        <ColumnsWrapper className="flex flex-col-reverse md:grid md:grid-flow-col md:auto-cols-[minmax(1,_2fr)]">
           <Column>
-            <div>
-              <Title>{product.title}</Title>
+            <div className="space-y-3 text-center md:text-left">
+              <Title className="text-2xl sm:text-3xl lg:text-5xl">
+                {product.title}
+              </Title>
               <Desc>{product.description}</Desc>
-              <ButtonsWrapper>
+              <ButtonsWrapper className="justify-center md:justify-start">
                 <ButtonLink
                   href={"/products/" + product._id}
                   outline="true"

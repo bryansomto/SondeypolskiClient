@@ -1,3 +1,4 @@
+import "@/styles/globals.css";
 import { StyleSheetManager, createGlobalStyle } from "styled-components";
 import { CartContextProvider } from "../lib/CartContext";
 import isPropValid from "@emotion/is-prop-valid";

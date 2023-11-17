@@ -23,7 +23,7 @@ const WhiteBox = styled(Link)`
 
 const Title = styled(Link)`
   font-weight: normal;
-  font-size: 0.9rem;
+  /* font-size: 0.9rem; */
   margin: 0;
   color: inherit;
   text-decoration: none;
@@ -41,7 +41,7 @@ const PriceRow = styled.div`
 `;
 
 const Price = styled.div`
-  font-size: 1.5rem;
+  /* font-size: 1.5rem; */
   font-weight: 600;
 `;
 export default function ProductBox({ _id, title, description, price, images }) {
@@ -55,9 +55,11 @@ export default function ProductBox({ _id, title, description, price, images }) {
         </div>
       </WhiteBox>
       <ProductInfoBox>
-        <Title href={url}>{title}</Title>
+        <Title href={url} className="text-xs sm:text-sm lg:text-base">
+          {title}
+        </Title>
         <PriceRow>
-          <Price>₦{price}</Price>
+          <Price className="text-base sm:text-xl lg:text-2xl">₦{price}</Price>
           <Button onClick={() => addProduct(_id)} primary="true" outline="true">
             <CartIcon />
           </Button>
