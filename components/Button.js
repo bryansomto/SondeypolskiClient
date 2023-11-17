@@ -3,7 +3,10 @@ import styled, { css } from "styled-components";
 
 export const ButtonStyle = css`
   border: 0;
-  padding: 5px 15px;
+  padding: 4px 5px 4px 7px;
+  @media (min-width: 640px) {
+    padding: 5px 15px;
+  }
   border-radius: 5px;
   cursor: pointer;
   display: inline-flex;
@@ -75,6 +78,15 @@ export const ButtonStyle = css`
       svg {
         height: 20px;
       }
+    `}
+    ${(props) =>
+    props.type === "count" &&
+    css`
+      margin: 3px;
+      padding: 0 6px;
+      color: #fff;
+      background-color: #222;
+      border: 1px solid rgba(0, 0, 0, 0.1);
     `}
 `;
 

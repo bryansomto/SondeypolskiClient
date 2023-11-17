@@ -59,7 +59,7 @@ export default function ProductBox({ _id, title, description, price, images }) {
           {title}
         </Title>
         <PriceRow>
-          <Price className="text-base sm:text-xl lg:text-2xl">₦{price}</Price>
+          <Price className="text-sm sm:text-xl lg:text-2xl">₦{price}</Price>
           <Button onClick={() => addProduct(_id)} primary="true" outline="true">
             <CartIcon />
           </Button>

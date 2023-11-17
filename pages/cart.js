@@ -9,33 +9,51 @@ import Table from "../components/Table";
 import Input from "../components/Input";
 const ColumnsWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 40px;
+  gap: 20px;
+  @media (min-width: 640px) {
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 40px;
+  }
   margin-top: 40px;
 `;
 
 const Box = styled.div`
   background-color: #fff;
   border-radius: 10px;
-  padding: 30px;
+  padding: 10px;
+  @media (min-width: 640px) {
+    padding: 20px;
+  }
 `;
 
 const ProductInfoCell = styled.td`
-  padding: 10px 0;
+  padding: 5px 0;
+  @media (min-width: 640px) {
+    padding: 10px 0;
+  }
 `;
 
 const ProductImageBox = styled.div`
-  width: 100px;
-  height: 100px;
-  padding: 10px;
+  width: 80px;
+  height: 70px;
+  padding: 5px;
+  @media (min-width: 640px) {
+    width: 100px;
+    height: 100px;
+    padding: 10px;
+  }
   border: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 10px;
   img {
-    max-width: 80px;
-    max-height: 80px;
+    max-width: 70px;
+    max-height: 60px;
+    @media (min-width: 640px) {
+      max-width: 80px;
+      max-height: 80px;
+    }
   }
 `;
 
@@ -122,7 +140,7 @@ export default function CartPage() {
     <>
       <Header />
       <Center>
-        <ColumnsWrapper>
+        <ColumnsWrapper className="text-sm sm:text-base">
           <Box>
             <h2>Cart</h2>
             {!cartProducts?.length && <div>Your cart is empty</div>}
@@ -146,7 +164,10 @@ export default function CartPage() {
                         {product.title}
                       </ProductInfoCell>
                       <td>
-                        <Button onClick={() => lessOfThisProduct(product._id)}>
+                        <Button
+                          type="count"
+                          onClick={() => lessOfThisProduct(product._id)}
+                        >
                           -
                         </Button>
                         <QuantityLabel>
@@ -155,7 +176,10 @@ export default function CartPage() {
                               .length
                           }
                         </QuantityLabel>
-                        <Button onClick={() => moreOfThisProduct(product._id)}>
+                        <Button
+                          type="count"
+                          onClick={() => moreOfThisProduct(product._id)}
+                        >
                           +
                         </Button>
                       </td>

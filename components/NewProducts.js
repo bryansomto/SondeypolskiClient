@@ -4,7 +4,6 @@ import ProductBox from "./ProductBox";
 // import tw from "twin.macro";
 
 const ProductsGrid = styled.div`
-  gap: 30px;
   padding-top: 10px;
 `;
 
@@ -17,7 +16,7 @@ export default function NewProducts({ products }) {
   return (
     <Center>
       <Title className="text-2xl sm:text-4xl">New Arrivals</Title>
-      <ProductsGrid className="grid grid-cols-3 sm:grid-cols-4">
+      <ProductsGrid className="grid grid-cols-3 gap-2.5 sm:grid-cols-4 sm:gap-[30px]">
         {products?.length > 0 &&
           products.map((product) => (
             <ProductBox key={product._id} {...product} />
