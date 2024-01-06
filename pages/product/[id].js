@@ -1,5 +1,5 @@
-import Button from "@/components/Button";
 import Center from "@/components/Center";
+import FlyingButton from "@/components/FlyingButton";
 import Header from "@/components/Header";
 import ProductImages from "@/components/ProductImages";
 import Title from "@/components/Title";
@@ -50,9 +50,9 @@ export default function ProductPage({ product }) {
                 <Price>₦{product.price}</Price>
               </div>
               <div>
-                <Button primary="true" onClick={() => addProduct(product._id)}>
+                <FlyingButton main _id={product._id} src={product.images?.[0]}>
                   <CartIcon /> Add to cart
-                </Button>
+                </FlyingButton>
               </div>
             </PriceRow>
           </div>

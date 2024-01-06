@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import Center from "./Center";
-import Button from "./Button";
 import ButtonLink from "./ButtonLink";
 import CartIcon from "./icons/CartIcon";
-import { useContext } from "react";
-import { CartContext } from "@/lib/CartContext";
+import FlyingButton from "./FlyingButton";
+import { RevealWrapper } from "next-reveal";
 
 const Bg = styled.div`
   background-color: #222;
@@ -59,38 +58,42 @@ const ButtonsWrapper = styled.div`
 `;
 
 export default function Featured({ product }) {
-  const { addProduct } = useContext(CartContext);
-  function addFeaturedToCart() {
-    addProduct(product._id);
-  }
   return (
     <Bg>
       <Center>
         <ColumnsWrapper>
           <Column>
             <div className="space-y-4 text-center md:text-left">
-              <Title className="text-2xl sm:text-3xl lg:text-5xl">
-                {product.title}
-              </Title>
-              <Desc>{product.description}</Desc>
-              <ButtonsWrapper className="justify-center md:justify-start">
-                <ButtonLink
-                  href={"/products/" + product._id}
-                  outline="true"
-                  white="true"
-                >
-                  Read more
-                </ButtonLink>
-                <Button white="true" onClick={addFeaturedToCart}>
-                  <CartIcon />
-                  Add to cart
-                </Button>
-              </ButtonsWrapper>
+              <RevealWrapper origin={"left"}>
+                <Title className="text-2xl sm:text-3xl lg:text-5xl">
+                  {product.title}
+                </Title>
+                <Desc>{product.description}</Desc>
+                <ButtonsWrapper className="justify-center md:justify-start">
+                  <ButtonLink
+                    href={"/products/" + product._id}
+                    outline="true"
+                    white="true"
+                  >
+                    Read more
+                  </ButtonLink>
+                  <FlyingButton
+                    white
+                    _id={product._id}
+                    src={product.images?.[0]}
+                  >
+                    <CartIcon />
+                    Add to cart
+                  </FlyingButton>
+                </ButtonsWrapper>
+              </RevealWrapper>
             </div>
           </Column>
 
           <Column>
-            <img src={product.images[0]} alt={product.title} />
+            <RevealWrapper>
+              <img src={product.images[0]} alt={product.title} />
+            </RevealWrapper>
           </Column>
         </ColumnsWrapper>
       </Center>

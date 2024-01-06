@@ -1,9 +1,9 @@
 import styled from "styled-components";
-import Button from "./Button";
 import CartIcon from "./icons/CartIcon";
 import Link from "next/link";
 import { useContext } from "react";
 import { CartContext } from "@/lib/CartContext";
+import FlyingButton from "./FlyingButton";
 
 const ProductWrapper = styled.div``;
 const WhiteBox = styled(Link)`
@@ -41,14 +41,14 @@ const PriceRow = styled.div`
 `;
 
 const Price = styled.div`
-  font-size: 0.9rem;
+  font-size: 1rem;
   font-weight: 500;
   @media screen and (min-width: 768px) {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
 `;
+
 export default function ProductBox({ _id, title, description, price, images }) {
-  const { addProduct } = useContext(CartContext);
   const url = "/product/" + _id;
   return (
     <ProductWrapper>
@@ -63,9 +63,10 @@ export default function ProductBox({ _id, title, description, price, images }) {
         </Title>
         <PriceRow>
           <Price>₦{price}</Price>
-          <Button onClick={() => addProduct(_id)} primary="true" outline="true">
-            <CartIcon className="w-4 h-4 sm:w-6 sm:h-6" />
-          </Button>
+          <FlyingButton _id={_id} src={images?.[0]}>
+            <p className="hidden md:flex text-sm">Add to cart</p>
+            <CartIcon className="flex md:hidden w-4 h-4 sm:w-6 sm:h-6" />
+          </FlyingButton>
         </PriceRow>
       </ProductInfoBox>
     </ProductWrapper>
