@@ -53,7 +53,7 @@ export default function CategoriesPage({ mainCategories, categoriesProducts }) {
       <Center>
         <Title>All categories</Title>
         {mainCategories.map((cat) => (
-          <CategoryWrapper>
+          <CategoryWrapper key={cat._id}>
             <CategoryTitle>
               <h2>{cat.name}</h2>
               <div>
@@ -62,7 +62,7 @@ export default function CategoriesPage({ mainCategories, categoriesProducts }) {
             </CategoryTitle>
             <CategoryGrid>
               {categoriesProducts[cat._id].map((p) => (
-                <ProductBox {...p} />
+                <ProductBox {...p} key={cat._id} />
               ))}
               <div>
                 <ShowAllSquare href={"/category/" + cat._id}>
