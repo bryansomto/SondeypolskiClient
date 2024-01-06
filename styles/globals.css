@@ -13,4 +13,10 @@
     .desktopNavbar {
       @apply hidden sm:flex sm:flex-row sm:items-end sm:justify-end;
     }
+    h1 {
+      @apply text-xl font-bold py-3
+    }
+    h2 {
+      @apply text-lg font-bold py-2
+    }
 }
