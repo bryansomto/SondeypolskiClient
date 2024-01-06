@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import CartIcon from "./icons/CartIcon";
 import Link from "next/link";
-import { useContext } from "react";
-import { CartContext } from "@/lib/CartContext";
 import FlyingButton from "./FlyingButton";
 
 const ProductWrapper = styled.div``;
