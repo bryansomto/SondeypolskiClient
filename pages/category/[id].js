@@ -3,6 +3,7 @@ import Header from "@/components/Header";
 import ProductsGrid from "@/components/ProductsGrid";
 import Spinner from "@/components/Spinner";
 import Title from "@/components/Title";
+import { primary } from "@/lib/colors";
 import { Category } from "@/models/Category";
 import { Product } from "@/models/Product";
 import axios from "axios";
@@ -11,30 +12,70 @@ import styled from "styled-components";
 
 const CategoryHeader = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
   h1 {
     font-size: 1.5em;
   }
+  @media screen and (min-width: 768px) {
+    display: flex;
+    flex-direction: row;
+  }
+`;
+
+const StyledFilter = styled.button`
+  display: flex;
+  justify-content: end;
+  font-size: 0.8em;
+  font-style: italic;
+  color: ${primary};
+  cursor: pointer;
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
 `;
 
 const FiltersWrapper = styled.div`
-  display: flex;
-  gap: 15px;
+  ${(props) =>
+    props.mobileFiltersActive
+      ? `
+      display: flex;
+      flex-direction: row;
+      justify-content: end;
+      gap: 10px;
+      `
+      : `
+      display: none;
+    `}
+  @media screen and (min-width: 768px) {
+    display: flex;
+  }
 `;
 
 const Filter = styled.div`
   background-color: #ddd;
-  padding: 5px 10px;
+  padding: 5px 5px;
   border-radius: 5px;
   display: flex;
+  align-items: center;
   gap: 5px;
   color: #444;
-  select {
+  select,
+  span {
     background-color: transparent;
     border: 0;
-    font-size: inherit;
+    font-size: 0.6rem;
     color: #444;
+  }
+  @media screen and (min-width: 768px) {
+    padding: 5px 10px;
+    select,
+    span {
+      background-color: transparent;
+      border: 0;
+      font-size: inherit;
+      color: #444;
+    }
   }
 `;
 
@@ -53,6 +94,7 @@ export default function CategoryPage({
   const [sort, setSort] = useState(defaultSorting);
   const [loadingProducts, setLoadingProducts] = useState(false);
   const [filtersChanged, setFiltersChanged] = useState(false);
+  const [mobileFiltersActive, setFiltersActive] = useState(false);
 
   function handleFilterChange(filterName, filterValue) {
     setFiltersValues((prev) => {
@@ -89,7 +131,11 @@ export default function CategoryPage({
       <Center>
         <CategoryHeader>
           <h1>{category.name}</h1>
-          <FiltersWrapper>
+          <StyledFilter onClick={() => setFiltersActive((prev) => !prev)}>
+            filters
+          </StyledFilter>
+
+          <FiltersWrapper mobileFiltersActive={mobileFiltersActive}>
             {category.properties.map((prop) => (
               <Filter key={prop.name}>
                 <span>{prop.name}:</span>
