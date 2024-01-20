@@ -11,6 +11,10 @@ const StyledProductsGrid = styled.div`
     grid-template-columns: 1fr 1fr 1fr 1fr;
     gap: 30px;
   }
+  @media screen and (min-width: 1024px) {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    gap: 30px;
+  }
 `;
 
 export default function ProductsGrid({ products }) {

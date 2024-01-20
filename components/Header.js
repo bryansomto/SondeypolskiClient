@@ -76,7 +76,7 @@ export default function Header() {
     <StyledHeader>
       <Center>
         <Wrapper>
-          <Logo href={"/"}>SondeyPolskiTech</Logo>
+          <Logo href={"/"}>StreetOfGadgets</Logo>
 
           <StyledNav mobileNavActive={mobileNavActive}>
             <NavLink href={"/"}>Home</NavLink>
