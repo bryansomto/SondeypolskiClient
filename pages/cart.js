@@ -8,12 +8,13 @@ import axios from "axios";
 import Table from "../components/Table";
 import Input from "../components/Input";
 import { RevealWrapper } from "next-reveal";
+
 const ColumnsWrapper = styled.div`
   display: grid;
   gap: 20px;
   @media (min-width: 768px) {
     grid-template-columns: 1.2fr 0.8fr;
-    gap: 40px;
+    gap: 30px;
   }
   margin-top: 40px;
 `;
@@ -67,6 +68,12 @@ const CityHolder = styled.div`
   gap: 5px;
 `;
 
+const Error = styled.p`
+  color: #ff0000;
+  /* margin-bottom: 5px; */
+  font-size: x-small;
+`;
+
 export default function CartPage() {
   const { cartProducts, addProduct, removeProduct, clearCart } =
     useContext(CartContext);
@@ -77,7 +84,11 @@ export default function CartPage() {
   const [postalCode, setPostalCode] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
   const [country, setCountry] = useState("");
+  const [errors, setErrors] = useState({});
+  const [isFormValid, setIsFormValid] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isConfirm, setIsConfirm] = useState(false);
+
   useEffect(() => {
     if (cartProducts.length > 0) {
       axios.post("/api/cart", { ids: cartProducts }).then((response) => {
@@ -87,9 +98,39 @@ export default function CartPage() {
       setProducts([]);
     }
   }, [cartProducts]);
+
+  const validateForm = () => {
+    let errors = {};
+
+    if (!name) {
+      errors.name = "Name is required.";
+    }
+
+    if (!email) {
+      errors.email = "Email is required.";
+    } else if (!/\S+@\S+\.\S+/.test(email)) {
+      errors.email = "Email is invalid.";
+    }
+    if (!city) {
+      errors.city = "City is required.";
+    }
+    if (!streetAddress) {
+      errors.streetAddress = "Street address is required.";
+    }
+
+    setErrors(errors);
+    setIsFormValid(Object.keys(errors).length === 0);
+  };
+
   useEffect(() => {
     if (window.location.href.includes("successful")) {
       setIsSuccess(true);
+      clearCart();
+    }
+  }, []);
+  useEffect(() => {
+    if (window.location.href.includes("confirm")) {
+      setIsConfirm(true);
       clearCart();
     }
   }, []);
@@ -106,18 +147,39 @@ export default function CartPage() {
   }
 
   async function goToPayment() {
-    const response = await axios.post("/api/checkout", {
-      name,
-      email,
-      city,
-      postalCode,
-      streetAddress,
-      country,
-      cartProducts,
-    });
-    if (response) {
-      console.log(response.data.url);
-      window.location = response.data.url;
+    if (isFormValid) {
+      const response = await axios.post("/api/checkout", {
+        name,
+        email,
+        city,
+        postalCode,
+        streetAddress,
+        country,
+        cartProducts,
+      });
+      if (response) {
+        window.location = response.data.url;
+      }
+    } else {
+      validateForm();
+    }
+  }
+  async function goToConfirmation() {
+    if (isFormValid) {
+      const response = await axios.post("/api/confirm", {
+        name,
+        email,
+        city,
+        postalCode,
+        streetAddress,
+        country,
+        cartProducts,
+      });
+      if (response) {
+        window.location = response.data.url;
+      }
+    } else {
+      validateForm();
     }
   }
 
@@ -130,6 +192,21 @@ export default function CartPage() {
             <Box>
               <h1>Thanks for your order!</h1>
               <p>We will email you when your order will be sent</p>
+            </Box>
+          </ColumnsWrapper>
+        </Center>
+      </>
+    );
+  }
+  if (isConfirm) {
+    return (
+      <>
+        <Header />
+        <Center>
+          <ColumnsWrapper>
+            <Box>
+              <h1>Thanks for your order!</h1>
+              <p>Your order has been confirmed</p>
             </Box>
           </ColumnsWrapper>
         </Center>
@@ -213,6 +290,7 @@ export default function CartPage() {
                   name="name"
                   onChange={(ev) => setName(ev.target.value)}
                 />
+                {errors.name && <Error>{errors.name}</Error>}
                 <Input
                   type="email"
                   placeholder="Email"
@@ -220,6 +298,7 @@ export default function CartPage() {
                   name="email"
                   onChange={(ev) => setEmail(ev.target.value)}
                 />
+                {errors.email && <Error>{errors.email}</Error>}
                 <CityHolder>
                   <Input
                     type="text"
@@ -228,6 +307,7 @@ export default function CartPage() {
                     name="city"
                     onChange={(ev) => setCity(ev.target.value)}
                   />
+                  {errors.city && <Error>{errors.city}</Error>}
                   <Input
                     type="number"
                     placeholder="Postal Code"
@@ -243,6 +323,7 @@ export default function CartPage() {
                   name="streetAddress"
                   onChange={(ev) => setStreetAddress(ev.target.value)}
                 />
+                {errors.streetAddress && <Error>{errors.streetAddress}</Error>}
                 <Input
                   type="text"
                   placeholder="Country"
@@ -250,9 +331,18 @@ export default function CartPage() {
                   name="country"
                   onChange={(ev) => setCountry(ev.target.value)}
                 />
-                <Button black="true" block="true" onClick={goToPayment}>
+                <button
+                  black="true"
+                  block="true"
+                  className="my-2 hidden"
+                  onClick={goToPayment}
+                >
                   Continue to payment
+                </button>
+                <Button black="true" block="true" onClick={goToConfirmation}>
+                  Confirm Order
                 </Button>
+                <div></div>
               </Box>
             </RevealWrapper>
           )}
