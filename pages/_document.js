@@ -14,6 +14,7 @@ export default function Document() {
         rel="stylesheet"
       ></link>
       <Head />
+      <title>Sondeypolski Technologies | Online Gadget Market</title>
       <body>
         <Main />
         <NextScript />
