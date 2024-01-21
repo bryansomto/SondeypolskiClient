@@ -6,6 +6,7 @@ import Title from "@/components/Title";
 import WhiteBox from "@/components/WhiteBox";
 import CartIcon from "@/components/icons/CartIcon";
 import { CartContext } from "@/lib/CartContext";
+import { primary } from "@/lib/colors";
 import { mongooseConnect } from "@/lib/mongoose";
 import { Product } from "@/models/Product";
 import { useContext } from "react";
@@ -28,8 +29,9 @@ const PriceRow = styled.div`
 `;
 
 const Price = styled.span`
-  font-size: 1.3rem;
-  font-weight: 500;
+  color: ${primary};
+  font-size: 1.7rem;
+  font-weight: 600;
 `;
 
 export default function ProductPage({ product }) {
@@ -47,10 +49,14 @@ export default function ProductPage({ product }) {
             <p>{product.description}</p>
             <PriceRow>
               <div>
-                <Price>₦{product.price}</Price>
+                <Price>₦{product.price + ".00"}</Price>
               </div>
               <div>
-                <FlyingButton main _id={product._id} src={product.images?.[0]}>
+                <FlyingButton
+                  black="true"
+                  _id={product._id}
+                  src={product.images?.[0]}
+                >
                   <CartIcon /> Add to cart
                 </FlyingButton>
               </div>

@@ -25,6 +25,18 @@ const FlyingButtonWrapper = styled.div`
       border: 1px solid white;
       color: #222;
     `}
+    ${(props) =>
+      props.black &&
+      `
+      background-color: #222;
+      color: #fff;
+      &:hover {
+        background-color: #fff;
+        color: ${primary};
+        border: 1px solid ${primary};
+        transition: 0.3s
+      }
+    `}
   }
   @keyframes fly {
     100% {
@@ -74,6 +86,7 @@ export default function FlyingButton(props) {
       <FlyingButtonWrapper
         white={props.white}
         main={props.main}
+        black={props.black}
         onClick={() => addProduct(props._id)}
       >
         <img src={props.src} alt="" ref={imgRef} />

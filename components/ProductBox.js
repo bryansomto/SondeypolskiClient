@@ -2,6 +2,8 @@ import styled from "styled-components";
 import CartIcon from "./icons/CartIcon";
 import Link from "next/link";
 import FlyingButton from "./FlyingButton";
+import { useState } from "react";
+import { primary } from "@/lib/colors";
 
 const ProductWrapper = styled.div``;
 const WhiteBox = styled(Link)`
@@ -29,18 +31,14 @@ const Title = styled(Link)`
 
 const ProductInfoBox = styled.div`
   margin-top: 5px;
-`;
-
-const PriceRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-top: 2px;
+  display: grid;
+  gap: 2px;
 `;
 
 const Price = styled.div`
+  color: ${primary};
   font-size: 1rem;
-  font-weight: 500;
+  font-weight: 600;
   @media screen and (min-width: 768px) {
     font-size: 1.2rem;
   }
@@ -59,13 +57,13 @@ export default function ProductBox({ _id, title, description, price, images }) {
         <Title href={url} className="text-xs sm:text-sm lg:text-base">
           {title}
         </Title>
-        <PriceRow>
-          <Price>₦{price}</Price>
-          <FlyingButton _id={_id} src={images?.[0]}>
-            <p className="hidden md:flex text-sm">Add to cart</p>
-            <CartIcon className="flex md:hidden w-4 h-4 sm:w-6 sm:h-6" />
-          </FlyingButton>
-        </PriceRow>
+        {/* <PriceRow> */}
+        <Price>₦{price + ".00"}</Price>
+        <FlyingButton black="true" _id={_id} src={images?.[0]}>
+          <p className="flex">Add to cart</p>
+          <CartIcon className="pl-2" />
+        </FlyingButton>
+        {/* </PriceRow> */}
       </ProductInfoBox>
     </ProductWrapper>
   );

@@ -3,7 +3,9 @@ import styled from "styled-components";
 import Center from "./Center";
 import { useContext, useState } from "react";
 import { CartContext } from "@/lib/CartContext";
+import logo from "@/lib/assets/logo/SOG_LogoHalf.png";
 import BarsIcon from "./icons/Bars";
+import Image from "next/image";
 
 const StyledHeader = styled.header`
   background-color: #222;
@@ -12,10 +14,20 @@ const StyledHeader = styled.header`
   z-index: 10;
 `;
 const Logo = styled(Link)`
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  gap: 5px;
   color: #fff;
   text-decoration: none;
   position: relative;
   z-index: 3;
+  p {
+    font-size: 1.2rem;
+    @media screen and (min-width: 768px) {
+      font-size: 1.5rem;
+    }
+  }
 `;
 
 const Wrapper = styled.div`
@@ -42,6 +54,7 @@ const StyledNav = styled.nav`
   background-color: #222;
   @media screen and (min-width: 768px) {
     display: flex;
+    align-items: center;
     position: static;
     padding: 0;
   }
@@ -57,6 +70,8 @@ const NavLink = styled(Link)`
 `;
 const NavButton = styled.button`
   background-color: transparent;
+  display: flex;
+  align-items: end;
   width: 40px;
   height: 40px;
   border: 0;
@@ -76,7 +91,15 @@ export default function Header() {
     <StyledHeader>
       <Center>
         <Wrapper>
-          <Logo href={"/"}>StreetOfGadgets</Logo>
+          <Logo href={"/"}>
+            <Image
+              src={logo}
+              width={40}
+              height={40}
+              alt="Street of gadget logo"
+            />
+            <p>StreetOfGadgets</p>
+          </Logo>
 
           <StyledNav mobileNavActive={mobileNavActive}>
             <NavLink href={"/"}>Home</NavLink>
