@@ -22,10 +22,18 @@ const Logo = styled(Link)`
   text-decoration: none;
   position: relative;
   z-index: 3;
-  p {
-    font-size: 1.2rem;
+  img {
+    width: 30px;
+    height: 30px;
     @media screen and (min-width: 768px) {
-      font-size: 1.5rem;
+      width: 40px;
+      height: 40px;
+    }
+  }
+  p {
+    font-size: 1rem;
+    @media screen and (min-width: 768px) {
+      font-size: 1.4rem;
     }
   }
 `;
@@ -55,6 +63,7 @@ const StyledNav = styled.nav`
   @media screen and (min-width: 768px) {
     display: flex;
     align-items: center;
+    margin-top: 8px;
     position: static;
     padding: 0;
   }
@@ -92,12 +101,7 @@ export default function Header() {
       <Center>
         <Wrapper>
           <Logo href={"/"}>
-            <Image
-              src={logo}
-              width={40}
-              height={40}
-              alt="Street of gadget logo"
-            />
+            <Image src={logo} alt="Street of gadget logo" />
             <p>StreetOfGadgets</p>
           </Logo>
 
