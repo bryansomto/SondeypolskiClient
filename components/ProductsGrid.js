@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import ProductBox from "./ProductBox";
-import { RevealList, RevealWrapper } from "next-reveal";
+import { RevealWrapper } from "next-reveal";
 
 const StyledProductsGrid = styled.div`
   display: grid;
