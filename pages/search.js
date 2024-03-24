@@ -5,7 +5,7 @@ import ProductsGrid from "@/components/ProductsGrid";
 import Spinner from "@/components/Spinner";
 import axios from "axios";
 import { debounce } from "lodash";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import styled from "styled-components";
 
 const SearchInput = styled(Input)`
@@ -56,7 +56,7 @@ export default function SearchPage() {
           />
         </InputWrapper>
         {!isLoading && phrase !== "" && products.length === 0 && (
-          <h2>No products found for "{phrase}"</h2>
+          <h2>No products found for &quot{phrase}&quot</h2>
         )}
         {isLoading && <Spinner fullWidth={true} />}
         {!isLoading && products.length > 0 && (
