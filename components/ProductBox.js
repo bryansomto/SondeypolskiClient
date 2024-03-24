@@ -5,7 +5,13 @@ import FlyingButton from "./FlyingButton";
 import { useState } from "react";
 import { primary } from "@/lib/colors";
 
-const ProductWrapper = styled.div``;
+const ProductWrapper = styled.div`
+  button {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+`;
 const WhiteBox = styled(Link)`
   background-color: #fff;
   padding: 20px;

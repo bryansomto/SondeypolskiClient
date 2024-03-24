@@ -6,6 +6,7 @@ import { CartContext } from "@/lib/CartContext";
 import logo from "@/lib/assets/logo/SOG_LogoHalf.png";
 import BarsIcon from "./icons/Bars";
 import Image from "next/image";
+import SearchIcon from "./icons/SearchIcon";
 
 const StyledHeader = styled.header`
   background-color: #222;
@@ -72,7 +73,11 @@ const NavLink = styled(Link)`
   display: block;
   color: #aaa;
   text-decoration: none;
+  min-width: 30px;
   padding: 10px 0;
+  svg {
+    height: 20px;
+  }
   @media screen and (min-width: 768px) {
     padding: 0;
   }
@@ -90,6 +95,26 @@ const NavButton = styled.button`
   z-index: 3;
   @media screen and (min-width: 768px) {
     display: none;
+  }
+`;
+const SideIcons = styled.div`
+  display: flex;
+  align-items: end;
+  @media screen and (min-width: 768px) {
+    align-items: center;
+  }
+  a {
+    display: inline-block;
+    min-width: 20px;
+    color: white;
+    svg {
+      margin-bottom: 4px;
+      width: 16px;
+      height: 16px;
+      @media screen and (min-width: 768px) {
+        margin-top: 10px;
+      }
+    }
   }
 `;
 
@@ -112,9 +137,14 @@ export default function Header() {
             <NavLink href={"/account"}>Account</NavLink>
             <NavLink href={"/cart"}>Cart ({cartProducts.length})</NavLink>
           </StyledNav>
-          <NavButton onClick={() => setMobileNavActive((prev) => !prev)}>
-            <BarsIcon />
-          </NavButton>
+          <SideIcons>
+            <Link href={"/search"}>
+              <SearchIcon />
+            </Link>
+            <NavButton onClick={() => setMobileNavActive((prev) => !prev)}>
+              <BarsIcon />
+            </NavButton>
+          </SideIcons>
         </Wrapper>
       </Center>
     </StyledHeader>
