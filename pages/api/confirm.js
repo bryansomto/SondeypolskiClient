@@ -1,7 +1,6 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Order } from "@/models/Order";
 import { Product } from "@/models/Product";
-import got from "got";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {

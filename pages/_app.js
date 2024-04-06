@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import { StyleSheetManager, createGlobalStyle } from "styled-components";
 import { CartContextProvider } from "../lib/CartContext";
 import isPropValid from "@emotion/is-prop-valid";
+import { SessionProvider } from "next-auth/react";
 
 const GlobalStyles = createGlobalStyle`
     body{
@@ -10,9 +11,17 @@ const GlobalStyles = createGlobalStyle`
         margin: 0;
         font-family: 'Poppins', sans-serif;
     }
+    hr{
+      display: block;
+      border: 0;
+      border-top: 1px solid #ccc;
+    }
 `;
 
-export default function App({ Component, pageProps }) {
+export default function App({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   return (
     <>
       <StyleSheetManager
@@ -20,9 +29,11 @@ export default function App({ Component, pageProps }) {
         disableVendorPrefixes={false}
       >
         <GlobalStyles />
-        <CartContextProvider>
-          <Component {...pageProps} />
-        </CartContextProvider>
+        <SessionProvider session={session}>
+          <CartContextProvider>
+            <Component {...pageProps} />
+          </CartContextProvider>
+        </SessionProvider>
       </StyleSheetManager>
     </>
   );
