@@ -30,9 +30,10 @@ export default async function handler(req, res) {
     response.data.amount >= response.data.charged_amount
   ) {
     console.log(response);
+    res.json(response);
     const orderId = response.data.meta.orderId;
     await Order.findByIdAndUpdate(orderId, {
-      paid: true,
+      paid: false,
     });
   } else {
     console.log(response);
