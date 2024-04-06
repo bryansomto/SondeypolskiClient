@@ -64,7 +64,7 @@ export default async function handler(req, res) {
         amount: totalAmount,
         currency: "NGN",
         payment_options: "card,mobilemoney,banktransfer",
-        redirect_url: `${process.env.PUBLIC_URL}/cart`,
+        redirect_url: `${process.env.NEXTAUTH_URL}/cart`,
         meta: {
           orderId: orderDoc._id.toString(),
         },
