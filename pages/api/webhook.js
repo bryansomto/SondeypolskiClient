@@ -13,7 +13,7 @@ export default async function handler(req, res) {
   }
   const payload = req.body;
   // It's a good idea to log all received events.
-  console.log(payload);
+  // console.log(payload);
   // Do something (that doesn't take too long) with the payload
   const tx_Id = payload.id;
   const response = await got
@@ -30,7 +30,6 @@ export default async function handler(req, res) {
     response.data.amount >= response.data.charged_amount
   ) {
     console.log(response);
-    res.json(response);
     const orderId = response.data.meta.orderId;
     await Order.findByIdAndUpdate(orderId, {
       paid: false,
