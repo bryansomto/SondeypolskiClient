@@ -32,7 +32,7 @@ export default async function handler(req, res) {
     console.log(response);
     const orderId = response.data.meta.orderId;
     await Order.findByIdAndUpdate(orderId, {
-      paid: false,
+      paid: true,
     });
   } else {
     console.log(response);
