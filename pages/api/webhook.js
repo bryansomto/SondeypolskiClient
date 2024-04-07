@@ -30,10 +30,12 @@ export default async function handler(req, res) {
     response.data.amount >= response.data.charged_amount
   ) {
     console.log(response);
+    console.log("1st DONE BRYAN");
     const orderId = response.data.meta.orderId;
     await Order.findByIdAndUpdate(orderId, {
       paid: true,
     });
+    console.log("2nd DONE BRYAN");
   } else {
     console.log(response);
     console.log("PAYMENT FAILED!!!");
