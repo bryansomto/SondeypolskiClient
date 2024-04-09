@@ -2,6 +2,8 @@ import { mongooseConnect } from "@/lib/mongoose";
 import { Order } from "@/models/Order";
 import { Product } from "@/models/Product";
 import got from "got";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./auth/[...nextauth]";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -43,6 +45,8 @@ export default async function handler(req, res) {
     }
   }
 
+  const session = await getServerSession(req, res, authOptions);
+
   const orderDoc = await Order.create({
     line_items,
     name,
@@ -52,6 +56,7 @@ export default async function handler(req, res) {
     streetAddress,
     country,
     paid: false,
+    userEmail: session?.user?.email,
   });
 
   const response = await got
