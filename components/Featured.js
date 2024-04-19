@@ -45,7 +45,6 @@ const ColumnsWrapper = styled.div`
     }
   }
 `;
-
 const Column = styled.div`
   display: flex;
   justify-content: center;
@@ -92,11 +91,13 @@ export default function Featured({ product }) {
 
           <Column>
             <RevealWrapper delay={0}>
-              <img
-                className={"main"}
-                src={product.images[0]}
-                alt={product.title}
-              />
+              <div>
+                <img
+                  className={"main"}
+                  src={product.images?.[0]}
+                  alt={product.title}
+                />
+              </div>
             </RevealWrapper>
           </Column>
         </ColumnsWrapper>
