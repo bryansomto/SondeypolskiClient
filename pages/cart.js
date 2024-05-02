@@ -18,6 +18,21 @@ const ColumnsWrapper = styled.div`
     gap: 30px;
   }
   margin-top: 40px;
+  margin-bottom: 40px;
+  table thead tr th:nth-child(3),
+  table tbody tr td:nth-child(3),
+  table tbody tr.subtotal td:nth-child(2) {
+    text-align: right;
+  }
+  table tr.subtotal td {
+    padding: 15px 0;
+  }
+  table tbody tr.subtotal td:nth-child(2) {
+    font-size: 1.4rem;
+  }
+  tr.total td {
+    font-weight: bold;
+  }
 `;
 
 const Box = styled.div`
@@ -90,6 +105,7 @@ export default function CartPage() {
   const [isFormValid, setIsFormValid] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isConfirm, setIsConfirm] = useState(false);
+  const [shippingFee, setShippingFee] = useState(null);
 
   useEffect(() => {
     if (cartProducts.length > 0) {
@@ -107,7 +123,6 @@ export default function CartPage() {
     if (!name) {
       errors.name = "Name is required.";
     }
-
     if (!email) {
       errors.email = "Email is required.";
     } else if (!/\S+@\S+\.\S+/.test(email)) {
@@ -119,23 +134,30 @@ export default function CartPage() {
     if (!streetAddress) {
       errors.streetAddress = "Street address is required.";
     }
-
     setErrors(errors);
     setIsFormValid(Object.keys(errors).length === 0);
   };
 
   useEffect(() => {
+    if (typeof window === undefined) {
+      return;
+    }
     if (window.location.href.includes("successful")) {
       setIsSuccess(true);
       clearCart();
     }
+    axios.get("/api/settings?name=shippingFee").then((res) => {
+      setShippingFee(res.data.value);
+    });
   }, []);
-  useEffect(() => {
-    if (window.location.href.includes("confirm")) {
-      setIsConfirm(true);
-      clearCart();
-    }
-  }, []);
+
+  // useEffect(() => {
+  //   if (window.location.href.includes("confirm")) {
+  //     setIsConfirm(true);
+  //     clearCart();
+  //   }
+  // }, []);
+
   useEffect(() => {
     if (!session) {
       return;
@@ -154,11 +176,6 @@ export default function CartPage() {
   }
   function lessOfThisProduct(id) {
     removeProduct(id);
-  }
-  let total = 0;
-  for (const productId of cartProducts) {
-    const price = products.find((p) => p._id === productId)?.price || 0;
-    total += price;
   }
 
   async function goToPayment() {
@@ -179,23 +196,29 @@ export default function CartPage() {
       validateForm();
     }
   }
-  async function goToConfirmation() {
-    if (isFormValid) {
-      const response = await axios.post("/api/confirm", {
-        name,
-        email,
-        city,
-        postalCode,
-        streetAddress,
-        country,
-        cartProducts,
-      });
-      if (response) {
-        window.location = response.data.url;
-      }
-    } else {
-      validateForm();
-    }
+  // async function goToConfirmation() {
+  //   if (isFormValid) {
+  //     const response = await axios.post("/api/confirm", {
+  //       name,
+  //       email,
+  //       city,
+  //       postalCode,
+  //       streetAddress,
+  //       country,
+  //       cartProducts,
+  //     });
+  //     if (response) {
+  //       window.location = response.data.url;
+  //     }
+  //   } else {
+  //     validateForm();
+  //   }
+  // }
+
+  let productsTotal = 0;
+  for (const productId of cartProducts) {
+    const price = products.find((p) => p._id === productId)?.price || 0;
+    productsTotal += price;
   }
 
   if (isSuccess) {
@@ -284,10 +307,17 @@ export default function CartPage() {
                         </td>
                       </tr>
                     ))}
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td>₦{total}</td>
+                    <tr className="subtotal">
+                      <td colSpan={2}>Products</td>
+                      <td>₦{productsTotal}</td>
+                    </tr>
+                    <tr className="subtotal">
+                      <td colSpan={2}>Shipping</td>
+                      <td>₦{shippingFee}</td>
+                    </tr>
+                    <tr className="subtotal total">
+                      <td colSpan={2}>Total</td>
+                      <td>₦{productsTotal + parseInt(shippingFee || 0)}</td>
                     </tr>
                   </tbody>
                 </Table>
@@ -346,18 +376,17 @@ export default function CartPage() {
                   name="country"
                   onChange={(ev) => setCountry(ev.target.value)}
                 />
-                <button
+                {/* <button
                   black="true"
                   block="true"
                   className="my-2 hidden"
-                  onClick={goToPayment}
+                  onClick={goToConfirmation}
                 >
                   Continue to payment
-                </button>
+                </button> */}
                 <Button black="true" block="true" onClick={goToPayment}>
                   Confirm Order
                 </Button>
-                <div></div>
               </Box>
             </RevealWrapper>
           )}

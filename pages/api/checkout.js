@@ -4,6 +4,7 @@ import { Product } from "@/models/Product";
 import got from "got";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./auth/[...nextauth]";
+import { Setting } from "@/models/Setting";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -25,7 +26,7 @@ export default async function handler(req, res) {
   const productsInfos = await Product.find({ _id: uniqueIds });
 
   let line_items = [];
-  let totalAmount = 0;
+  let totalProductAmount = 0;
   for (const productId of uniqueIds) {
     const productInfo = productsInfos.find(
       (p) => p._id.toString() === productId
@@ -41,9 +42,14 @@ export default async function handler(req, res) {
           unit_amount: quantity * productInfo.price,
         },
       });
-      totalAmount += quantity * productInfo.price;
+      totalProductAmount += quantity * productInfo.price;
     }
   }
+
+  const shippingFeeSetting = await Setting.findOne({ name: "shippingFee" });
+  const shippingFeeAmount = parseInt(shippingFeeSetting.value || "0");
+
+  const totalAmount = totalProductAmount + shippingFeeAmount;
 
   const session = await getServerSession(req, res, authOptions);
 
